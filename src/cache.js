@@ -8,10 +8,10 @@ class AppCache {
         if (!this.items.find(_item => _item.id === id)) {
             let item = db.getItem(id)
             let parent = item.parent ? this.items.find(_item => _item.id === item.parent) : null
-            if (parent && parent.deleted) {
-                item.deleted = true
-            }
             this.items = sortBy([item, ...this.items], item => item.id)
+            if (parent && parent.deleted) {
+                this.deleteItem(item.id, true)
+            }
             return item
         }
     }
