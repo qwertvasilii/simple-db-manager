@@ -1,0 +1,19 @@
+.App {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.LoadButtonWrapper {
+    align-self: center;
+}
+
+.ControlsWrapper {
+    padding: 0px 0px 20px 20px;
+}

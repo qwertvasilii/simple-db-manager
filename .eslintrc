@@ -1,0 +1,17 @@
+{
+    "extends": ["react-app", "prettier"],
+    "plugins": ["prettier"],
+    "rules": {
+      "prettier/prettier": "warn",
+      "object-shorthand": ["error", "properties"],
+      "no-tabs": "error",
+      "func-names": ["warn", "as-needed"],
+      "curly": ["error", "all"],
+      "padding-line-between-statements": [
+        "error",
+        { "blankLine": "always", "prev": ["block-like"], "next": "return" }
+      ]
+    },
+    "parser": "babel-eslint"
+  }
+  

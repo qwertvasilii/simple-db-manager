@@ -1,0 +1,23 @@
+.TreeItem {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.TreeItem:hover {
+    background: rgba(255, 0, 0, 0.1);
+    text-decoration: underline;
+}
+
+.TreeItem.active {
+    background: green;
+}
+
+.TreeItem.deleted {
+    font-style: italic;
+    color: salmon;
+}
+
+.TreeItem.deleted:hover {
+    background: none;
+    cursor: auto;
+}
