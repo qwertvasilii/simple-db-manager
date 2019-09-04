@@ -18,6 +18,15 @@ class DataBase {
         })
         this.items = [...newItems]
         localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(this.items))
+        let updated = this.items.reduce((arr, _item) => {
+            if (items.find(dbItem => dbItem.id === _item.id)) {
+                arr.push(_item)
+            }
+
+            return arr
+        }, [])
+
+        return updated
     }
 
     saveItem = (newItem, items) => {
@@ -25,7 +34,7 @@ class DataBase {
         let item = items.find(_item => _item.id === newItem.id)
         if (item) {
             item.value = newItem.value
-            item.deleted = newItem.deleted
+            item.deleted = item.deleted || newItem.deleted
             if (item.deleted) {
                 let childs = items.filter(_item => _item.parent === item.id)
                 childs.forEach(child => {
@@ -34,6 +43,10 @@ class DataBase {
                 })
             }
         } else {
+            if (newItem.parent) {
+                let parent = items.find(_item => _item.id === newItem.parent)
+                newItem.deleted = parent.deleted
+            }
             items.push(newItem)
         }
 

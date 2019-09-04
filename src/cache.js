@@ -4,28 +4,10 @@ import { sortBy, cloneDeep } from 'lodash'
 class AppCache {
     items = []
 
-    loadItem = (id, db, loadParents) => {
-        // let item = this.items.find(_item => _item.id === id)
-        // let loaded = false
-        // if (!item) {
-        //     item = db.getItem(id)
-        //     loaded = true
-        // }
-        // let parent = item.parent ? this.items.find(_item => _item.id === item.parent) : null
-        // if (item.parent && !parent && loadParents) {
-        //     parent = this.loadItem(item.parent, db, loadParents)
-        // }
-        // if (parent && parent.deleted) {
-        //     item.deleted = true
-        // }
-        // this.items = loaded ? sortBy([item, ...this.items], item => item.id) :  sortBy([...this.items], item => item.id)
-        // return item
+    loadItem = (id, db) => {
         if (!this.items.find(_item => _item.id === id)) {
             let item = db.getItem(id)
             let parent = item.parent ? this.items.find(_item => _item.id === item.parent) : null
-            if (item.parent && !parent && loadParents) {
-                parent = this.loadItem(item.parent, db, loadParents)
-            }
             if (parent && parent.deleted) {
                 item.deleted = true
             }
@@ -80,7 +62,7 @@ class AppCache {
     }
 
     saveItems = db => {
-        db.save(cloneDeep(this.items))
+        this.items = [...db.save(cloneDeep(this.items))]
     }
 
     reset = db => {

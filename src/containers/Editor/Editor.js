@@ -32,8 +32,10 @@ class Editor extends Component {
         this.setState({ selectedToEdit: id })
     }
     loadToCache = () => {
-        const { loadParents } = this.state
-        cache.loadItem(this.state.selectedToLoad, db, loadParents)
+        const { selectedToLoad } = this.state
+        if (selectedToLoad) {
+            cache.loadItem(this.state.selectedToLoad, db)
+        }
     }
     startEdit = () => {
         this.setState({ isEditing: true })
@@ -65,7 +67,7 @@ class Editor extends Component {
     }
     save = () => {
         cache.saveItems(db)
-        this.setState({ selectedToLoad: null })
+        this.setState({ selectedToLoad: null, selectToEdit: null, isEditing: false })
     }
     reset = () => {
         cache.reset(db)
@@ -85,7 +87,9 @@ class Editor extends Component {
                         stopEdit={this.stopEdit}
                     />
                     <div className={classes.LoadButtonWrapper}>
-                        <button onClick={this.loadToCache}>&lt;&lt;&lt;</button>
+                        <button disabled={!selectedToLoad} onClick={this.loadToCache}>
+                            &lt;&lt;&lt;
+                        </button>
                     </div>
                     <Tree items={db.items} dbInstance selected={selectedToLoad} onSelect={this.selectToLoad} />
                 </div>
